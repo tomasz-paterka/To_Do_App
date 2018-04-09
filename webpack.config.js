@@ -44,3 +44,23 @@ module.exports = {
 		})
 	]
 };
+
+var env = process.env.NODE_ENV || 'development';
+var plugins = [
+	new HtmlWebpackPlugin({
+		template: 'src/index.html',
+		filename: 'index.html',
+		inject: 'body',
+	})
+];
+
+console.log('NODE_ENV:', env);
+
+if (env === 'production') {
+	plugins.push(
+		new webpack.optimize.UglifyJsPlugin(),
+		new OptimizeJsPlugin({
+			sourceMap: false
+		})
+	);
+}
